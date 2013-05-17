@@ -54,7 +54,7 @@ setup(
     name='djangostupidstorage',
     version=version,
     url='https://github.com/irqed/django-stupid-storage',
-    download_url='http://pypi.python.org/pypi/django_stupid_storage/',
+    download_url='http://pypi.python.org/pypi/djangostupidstorage/',
     license='BSD',
     description='Simple Django WebDAV storage with upload queue.',
     author='Alexander Shchepetilnikov',
