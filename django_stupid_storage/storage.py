@@ -17,7 +17,7 @@ from django_stupid_storage import tasks
 def exists(self, remote_path):
     """
     Unfortunately easywebdav doesn't have this method at the moment.
-    And my pull request is left without any attention. 
+    And my pull request is left without any attention.
     """
     response = self._send('HEAD', remote_path, (200, 201, 404))
 
@@ -46,9 +46,9 @@ class WebDAVStorage(Storage):
             try:
                 self.storage_url = settings.STUPID_STORAGE_URL
             except:
-                 raise ImproperlyConfigured('STUPID_STORAGE_URL'
-                                            'is not defined in settings.py.'
-                                            'And storage_url argument is None')               
+                raise ImproperlyConfigured('STUPID_STORAGE_URL'
+                                           'is not defined in settings.py.'
+                                           'And storage_url argument is None')
 
     def _open(self, name, mode='rb'):
         if mode != 'rb':
@@ -62,7 +62,8 @@ class WebDAVStorage(Storage):
         Puts a task on a queue.
         """
         if self.use_queue:
-            tasks.upload.delay(self.hosts, content.file.temporary_file_path(), name)
+            tasks.upload.delay(self.hosts, content.file.temporary_file_path(),
+                               name)
         else:
             tasks.upload(self.hosts, content.file.temporary_file_path(), name)
 

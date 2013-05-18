@@ -14,6 +14,7 @@ def get_version(package):
     init_py = open(os.path.join(package, '__init__.py')).read()
     return re.match("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
 
+
 def get_packages(package):
     """
     Return root package and all sub-packages.
