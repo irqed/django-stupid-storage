@@ -7,6 +7,12 @@ import os
 import sys
 
 
+install_requires = [
+    'django-rq>=0.4.6',
+    'easywebdav==1.0.7',
+]
+
+
 def get_version(package):
     """
     Return package version as listed in `__version__` in `init.py`.
@@ -63,7 +69,7 @@ setup(
     packages=get_packages('django_stupid_storage'),
     package_data=get_package_data('django_stupid_storage'),
     #test_suite='',
-    install_requires=[],
+    install_requires=install_requires,
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Web Environment',
