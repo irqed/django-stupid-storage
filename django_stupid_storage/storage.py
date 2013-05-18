@@ -27,13 +27,13 @@ def exists(self, remote_path):
 easywebdav.Client.exists = MethodType(exists, None, easywebdav.Client)
 
 
-class QueuedWebDAVStorage(Storage):
+class WebDAVStorage(Storage):
     """
     WebDAVStorage saves files by copying them on several servers listed in
     settings.WEBDAV_HOSTS
     """
     def __init__(self, hosts=None, storage_url=None, **kwargs):
-        super(QueuedWebDAVStorage, self).__init__(**kwargs)
+        super(WebDAVStorage, self).__init__(**kwargs)
 
         if hosts is None:
             try:
