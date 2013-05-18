@@ -1,8 +1,9 @@
 #Django Stupid Storage
 
-Django WebDAV storage written for a stupid infrastructure. Maybe it will be helpful for someone else.
+Django WebDAV storage written for a stupid infrastructure. Maybe it will be useful for someone else.
 
-Since I've been using it for a big files mainly it uses RQ, but it's an option though. 
+Since I've been using it for a big files mainly it uses RQ, but it's an option though.
+Note that files uploaded in the loop, so if you gonna upload to many servers (or big files) use queue.
 
 ## Requirements
 
@@ -39,11 +40,16 @@ RQ_QUEUES = {
 }
 ```
 
+Don't forget to run one or more workers:
+
+    python manage.py rqworker django_stupid_storage_queue
+
 ## Example #1
 To use one stupid storage add to your settings.py:
 ```python
     WEBDAV_HOSTS = (
         ('localhost', 1080),
+        ('localhost', 1081),
     )
     STUPID_STORAGE_URL = 'http://media.example.com/'
 ```
@@ -62,7 +68,7 @@ class TestModel(models.Model):
         return self.file.url
 ```
 ## Example #2
-To use more stupid storages you can use class arguments:
+To use more stupid storages you can use class arguments instead of settings.py:
 ```python
 image_storage = WebDAVStorage(hosts=image_storage_hosts, storage_url='http://i.example.com/')
 video_storage = WebDAVStorage(hosts=video_storage_hosts, storage_url='http://v.example.com/',
@@ -70,6 +76,6 @@ video_storage = WebDAVStorage(hosts=video_storage_hosts, storage_url='http://v.e
 ```
 
 
-
+If you have any ideas feel free to contact me or just send me a pull request:)
 
 
