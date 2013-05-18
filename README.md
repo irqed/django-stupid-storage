@@ -16,3 +16,45 @@ Install using `pip`...
     
 or download from [PyPI](https://pypi.python.org/pypi/djangostupidstorage).
 
+Add `'django_stupid_storage'` to your `INSTALLED_APPS` setting.
+```python
+    INSTALLED_APPS = (
+        ...
+        'django_stupid_storage',        
+    )
+```
+## Example #1
+To use one stupid storage add to your settings.py:
+```python
+    WEBDAV_HOSTS = (
+        ('localhost', 1080),
+    )
+    STUPID_STORAGE_URL = 'http://media.example.com/'
+```
+Example model:
+```python
+from django.db import models
+
+from django_stupid_storage import WebDAVStorage
+
+webdav_storage = WebDAVStorage()
+
+class TestModel(models.Model):
+    name = models.CharField(max_length=30)
+    file = models.FileField(upload_to='files/%Y/%m/%d/', storage=webdav_storage)
+
+    def get_absolute_url(self):
+        return self.file.url
+```
+## Example #2
+To use more stupid storages you can use class arguments:
+```python
+image_storage = WebDAVStorage(hosts=image_storage_hosts, storage_url='http://i.example.com/')
+video_storage = WebDAVStorage(hosts=video_storage_hosts, storage_url='http://v.example.com/',
+                              use_queue=True)
+```
+
+
+
+
+
