@@ -8,7 +8,7 @@ Note that files uploaded in the loop, so if you gonna upload to many servers (or
 ## Requirements
 
 * Python (2.6.5+, 2.7)
-* Django (1.3, 1.4, 1.5)
+* Django (1.4, 1.5)
 * django-rq (0.4.6+)
 * easywebdav (1.0.7)
 
