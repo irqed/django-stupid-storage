@@ -32,9 +32,9 @@ class WebDAVStorage(Storage):
     WebDAVStorage saves files by copying them on several servers listed in
     settings.WEBDAV_HOSTS
     """
-    def __init__(self, hosts=None, storage_url=None, **kwargs):
+    def __init__(self, hosts=None, storage_url=None, use_queue=False, **kwargs):
         super(WebDAVStorage, self).__init__(**kwargs)
-
+        self.use_queue = use_queue
         if hosts is None:
             try:
                 self.hosts = settings.WEBDAV_HOSTS
@@ -61,7 +61,10 @@ class WebDAVStorage(Storage):
         """
         Puts a task on a queue.
         """
-        tasks.upload.delay(self.hosts, content.file.temporary_file_path(), name)
+        if self.use_queue:
+            tasks.upload.delay(self.hosts, content.file.temporary_file_path(), name)
+        else:
+            tasks.upload(self.hosts, content.file.temporary_file_path(), name)
 
         return name
 
