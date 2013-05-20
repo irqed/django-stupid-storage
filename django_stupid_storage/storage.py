@@ -35,14 +35,17 @@ class WebDAVStorage(Storage):
     def __init__(self, hosts=None, storage_url=None, use_queue=False, **kwargs):
         super(WebDAVStorage, self).__init__(**kwargs)
         self.use_queue = use_queue
-        if hosts is None:
+        self.hosts = hosts
+        self.storage_url = storage_url
+        if self.hosts is None:
             try:
                 self.hosts = settings.WEBDAV_HOSTS
             except:
                 raise ImproperlyConfigured('WEBDAV_HOSTS is not defined in'
                                            'settings.py.'
                                            'And hosts argument is None')
-        if storage_url is None:
+
+        if self.storage_url is None:
             try:
                 self.storage_url = settings.STUPID_STORAGE_URL
             except:
