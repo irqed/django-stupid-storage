@@ -70,8 +70,8 @@ class TestModel(models.Model):
 ## Example #2
 To use more stupid storages you can use class arguments instead of settings.py:
 ```python
-image_storage = WebDAVStorage(hosts=image_storage_hosts, storage_url='http://i.example.com/')
-video_storage = WebDAVStorage(hosts=video_storage_hosts, storage_url='http://v.example.com/',
+image_storage = WebDAVStorage(upload_to='/%Y/%m/%d/', hosts=image_storage_hosts, storage_url='http://i.example.com/')
+video_storage = WebDAVStorage(upload_to='/%Y/%m/%d/',hosts=video_storage_hosts, storage_url='http://v.example.com/',
                               use_queue=True)
 ```
 
