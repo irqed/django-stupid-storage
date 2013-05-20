@@ -64,11 +64,15 @@ class WebDAVStorage(Storage):
         """
         Puts a task on a queue.
         """
+        if hasattr(content.file, 'temporary_file_path'):
+            path = content.file.temporary_file_path()
+        elif hasattr(content.file, 'name'):
+            path = content.file.name
+
         if self.use_queue:
-            tasks.upload.delay(self.hosts, content.file.temporary_file_path(),
-                               name)
+            tasks.upload.delay(self.hosts, path, name)
         else:
-            tasks.upload(self.hosts, content.file.temporary_file_path(), name)
+            tasks.upload(self.hosts, path, name)
 
         return name
 
