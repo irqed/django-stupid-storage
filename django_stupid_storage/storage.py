@@ -1,14 +1,18 @@
+import os
 import re
 import uuid
 import random
 import urlparse
 import easywebdav
+import django_rq
+import tempfile
 
 from types import MethodType
 
 from django.conf import settings
 from django.core.files import base
 from django.core.files.storage import Storage
+from django.core.files.move import file_move_safe
 from django.core.exceptions import ImproperlyConfigured
 
 from django_stupid_storage import tasks
@@ -70,7 +74,12 @@ class WebDAVStorage(Storage):
             path = content.file.name
 
         if self.use_queue:
-            tasks.upload.delay(self.hosts, path, name)
+            local_path = os.path.join(tempfile.gettempdir(), path.split('/')[-1] + '.temp',)
+            file_move_safe(path, local_path)
+            content.close()
+            queue = django_rq.get_queue(settings.UPLOAD_QUEUE)
+            queue.enqueue(tasks.upload, hosts=self.hosts, temp_path=local_path,
+                          destination=name)
         else:
             tasks.upload(self.hosts, path, name)
 
